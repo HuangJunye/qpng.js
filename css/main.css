@@ -1,13 +1,13 @@
 @font-face {
     font-family: gameFont;
     src: url('../fonts/KeepCalm-Medium.ttf');
-    font-weight:bold;
+    font-weight: bold;
 }
 
 * {
     margin: 0;
     padding: 0;
-}	
+}
 
 body {
     margin: 0;
@@ -44,7 +44,6 @@ p {
     font-family: gameFont;
     font-size: 1vw;
     margin: auto;
-
 }
 
 canvas {

@@ -1,7 +1,7 @@
 import levelScene from "./levelScene.js";
 
-export const screenWidth = 450;
-export const screenHeight = 250;
+export const screenWidth = 675;
+export const screenHeight = 375;
 
 const config = {
     type: Phaser.AUTO,
