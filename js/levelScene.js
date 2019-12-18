@@ -76,7 +76,6 @@ export default class levelScene extends Phaser.Scene {
         this.ball.setScale(0.5, 0.5);
         this.ball.setMaxVelocity(screenWidth);
         this.ball.setMass(1);
-        this.ball.setCircle(38);
         this.ball.body.onWorldBounds = true;
         this.ball.type = 'ball';
         this.ball.setData('inMiddle', true);
@@ -137,22 +136,20 @@ export default class levelScene extends Phaser.Scene {
         }
 
         // above
-        if (ball.y < paddle.y) {
+        if (ball.y <= paddle.y) {
             // ball is on the left-hand side of the paddle
             diff = ball.y - paddle.y;
-            ball.setVelocityY(1.2 * diff);
+            ball.setVelocityY(400 * diff / screenHeight);
         }
         // below
         else if (ball.y > paddle.y) {
             // ball is on the right-hand side of the paddle
             diff = paddle.y + ball.y;
-            ball.setVelocityY(1.2 * diff);
+            ball.setVelocityY(400 * diff / screenHeight);
         }
-        // middle
-        else {
-            // ball is perfectly in the middle
-            ball.setVelocityY(2 + Math.random() * 10);
-        }
+
+        // accelerate the ball every bounce
+        ball.setVelocityX(ball.body.velocity.x * 1.1);
     }
 
     resetBall() {
