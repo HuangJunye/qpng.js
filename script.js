@@ -49,6 +49,9 @@ function createGame() {
   ball.setBounce(1);
   ball.setVelocityY(velocityY);
   ball.setVelocityX(velocityX);
+
+  this.physics.add.collider(ball, player, hitPlayer, null, this);
+  this.physics.add.collider(ball, pc, hitPc, null, this);
 }
 
 function updateGame() {
@@ -82,4 +85,17 @@ function hitPlayer(ball, player) {
     ball.setVelocityY(velocityY);
   }
   player.setVelocityX(-1);
+}
+
+function hitPc(ball,pc) {
+  velocityX=velocityX-50;
+  velocityX=velocityX*-1;
+  console.log(velocityX);
+  ball.setVelocityX(velocityX);
+
+  if(velocityY<0) {
+    velocityY=velocityY*-1
+    ball.setVelocityY(velocityY);
+  }
+  pc.setVelocityX(1);
 }
