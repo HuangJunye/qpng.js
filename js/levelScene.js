@@ -11,22 +11,13 @@ export default class levelScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image("ball", "assets/ball2.png");
-        this.load.image("pong", "assets/pong.png");
+        this.load.image("ball", "assets/ball.png");
+        this.load.image("paddle", "assets/paddle.png");
 
-        this.load.audio('left', [
-            'sounds/left.wav'
-        ]);
-        this.load.audio('right', [
-            'sounds/right.wav'
-        ]);
-        this.load.audio('wall', [
-            'sounds/wall.wav'
-        ]);
-        this.load.audio('goal', [
-            'sounds/goal.wav'
-        ]);
-
+        this.load.audio('left', ['sounds/left.wav']);
+        this.load.audio('right', ['sounds/right.wav']);
+        this.load.audio('wall', ['sounds/wall.wav']);
+        this.load.audio('goal', ['sounds/goal.wav']);
     }
 
     create() {
@@ -38,7 +29,7 @@ export default class levelScene extends Phaser.Scene {
         this.cam.flash();
 
         // add line down the middle
-        let graphics = this.add.graphics({ lineStyle: { width: 0.5, color: 0xffffff } });
+        let graphics = this.add.graphics({ lineStyle: {width: 2, color: 0xffffff} });
         let line = new Phaser.Geom.Line(screenWidth / 2, 0, screenWidth / 2, screenHeight);
         graphics.strokeLineShape(line);
 
@@ -75,15 +66,15 @@ export default class levelScene extends Phaser.Scene {
 
         this.emitter = this.particles.createEmitter({
             speed: 100,
-            scale: { start: 0.05, end: 0 },
-            lifespan: 350,
+            scale: { start: 0.1, end: 0 },
+            lifespan: 500,
             blendMode: 'SCREEN'
         });
 
         // create the ball
         this.ball = this.ballGroup.create(0, 0, "ball").setOrigin(0.5, 0.5);
-        this.ball.setScale(0.2, 0.2);
-        this.ball.setMaxVelocity(150);
+        this.ball.setScale(0.5, 0.5);
+        this.ball.setMaxVelocity(screenWidth);
         this.ball.setMass(1);
         this.ball.setCircle(38);
         this.ball.body.onWorldBounds = true;
@@ -122,13 +113,13 @@ export default class levelScene extends Phaser.Scene {
         this.ai.update(this.ball);
 
         // if ball goes out on left side (player)
-        if (this.ball.x < screenWidth * 0.05) {
+        if (this.ball.x < screenWidth * 0.01) {
             this.aiScore += 1;
             document.querySelector('#scoreTwo').innerHTML = this.aiScore;
             this.resetBall();
         }
         // ball goes out on right side (ai)
-        if (this.ball.x > screenWidth * 0.95) {
+        if (this.ball.x > screenWidth * 0.99) {
             this.playerScore += 1;
             document.querySelector('#scoreOne').innerHTML = this.playerScore;
             this.resetBall();
@@ -149,22 +140,18 @@ export default class levelScene extends Phaser.Scene {
         if (ball.y < paddle.y) {
             // ball is on the left-hand side of the paddle
             diff = ball.y - paddle.y;
-            ball.setVelocityY(12 * diff);
-
+            ball.setVelocityY(1.2 * diff);
         }
         // below
         else if (ball.y > paddle.y) {
             // ball is on the right-hand side of the paddle
             diff = paddle.y + ball.y;
-            ball.setVelocityY(12 * diff);
-
-
+            ball.setVelocityY(1.2 * diff);
         }
         // middle
         else {
             // ball is perfectly in the middle
             ball.setVelocityY(2 + Math.random() * 10);
-
         }
     }
 
