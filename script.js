@@ -17,11 +17,16 @@ var game = new Phaser.Game(config);
 var cursor;
 var player;
 var pc;
+var ball;
+
+var velocityX=Phaser.Math.Between(-100, 100);
+var velocityY=100;
 
 function preloadGame () {
     this.load.image('ground','assets/ground.png');
     this.load.image('player','assets/player.png');
     this.load.image('pc','assets/pc.png');
+    this.load.image('ball','assets/ball.png');
 }
 
 function createGame () {
@@ -38,6 +43,12 @@ function createGame () {
 
     pc=this.physics.add.sprite(20, 200, 'pc');
     pc.setCollideWorldBounds(true);
+
+    ball = this.physics.add.sprite(400, 200, 'ball');
+    ball.setCollideWorldBounds(true);
+    ball.setBounce(1);
+    ball.setVelocityY(velocityY);
+    ball.setVelocityX(velocityX);
 }
 
 function updateGame () {
