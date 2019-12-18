@@ -22,6 +22,11 @@ var ball;
 var velocityX = Phaser.Math.Between(-100, 100);
 var velocityY = 100;
 
+var scorePlayer = 0;
+var scorePc = 0;
+var scoreTextPlayer;
+var scoreTextPc;
+
 function preloadGame() {
   this.load.image('ground', 'assets/ground.png');
   this.load.image('player', 'assets/player.png');
@@ -52,6 +57,9 @@ function createGame() {
 
   this.physics.add.collider(ball, player, hitPlayer, null, this);
   this.physics.add.collider(ball, pc, hitPc, null, this);
+
+  scoreTextPc = this.add.text(16, 16, 'score: 0', { fontSize: '16px', fill: '#F00' });
+  scoreTextPlayer = this.add.text(700, 16, 'score: 0', { fontSize: '16px', fill: '#00F' });
 }
 
 function updateGame() {
@@ -70,6 +78,17 @@ function updateGame() {
     player.setVelocityY(150);
   } else {
     player.setVelocityY(0);
+  }
+  // calculate and display score
+  if(ball.x==796) {
+    scorePc += 1;
+    scoreTextPc.setText('Score: ' + scorePc);
+    reset();
+  }
+  if(ball.x==4){
+    scorePlayer += 1;
+    scoreTextPlayer.setText('Score: ' + scorePlayer);
+    reset(); 
   }
 }
 
@@ -98,4 +117,20 @@ function hitPc(ball,pc) {
     ball.setVelocityY(velocityY);
   }
   pc.setVelocityX(1);
+}
+
+/**
+ * Reset the game
+ */
+function reset() {
+  velocityX=Phaser.Math.Between(-100, 100);
+  velocityY=100;
+  ball.x=400;
+  ball.y=200;
+  player.x=780;
+  player.y=200;
+  pc.x=20;
+  pc.y=200;
+  ball.setVelocityX(velocityX);
+  ball.setVelocityY(velocityY);
 }
