@@ -1,10 +1,13 @@
 import levelScene from "./levelScene.js";
 
+export const screenWidth = 450;
+export const screenHeight = 250;
+
 const config = {
     type: Phaser.AUTO,
     parent: 'gameCanvas',
-    width: 18,
-    height: 10,
+    width: screenWidth,
+    height: screenHeight,
     transparent: true,
     resolution: 2,
     physics: {

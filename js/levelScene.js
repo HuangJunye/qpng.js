@@ -1,5 +1,6 @@
 import Player from "./player.js";
 import AI from "./ai.js";
+import {screenWidth, screenHeight} from './game.js';
 
 /**
  * level Scene
@@ -31,7 +32,7 @@ export default class levelScene extends Phaser.Scene {
   create() {
 
     // set world bounds
-    this.physics.world.setBounds(0, 0, 180, 100, true, true, true, true);
+    this.physics.world.setBounds(0, 0, screenWidth, screenHeight, true, true, true, true);
 
     // camera
     this.cam = this.cameras.main;
@@ -39,7 +40,7 @@ export default class levelScene extends Phaser.Scene {
 
     // add line down the middle
     let graphics = this.add.graphics({ lineStyle: { width: 0.5, color: 0xffffff } });
-    let line = new Phaser.Geom.Line(9, 0, 9, 10);
+    let line = new Phaser.Geom.Line(screenWidth/2, 0, screenWidth/2, screenHeight);
     graphics.strokeLineShape(line);
 
     // add sounds for ball when hitting walls or paddles
@@ -61,12 +62,12 @@ export default class levelScene extends Phaser.Scene {
     });
 
     // create player
-    this.player = new Player(this, 2, 5);
+    this.player = new Player(this, screenWidth*0.05, screenHeight/2);
     this.playerScore = 0;
     document.querySelector('#scoreOne').innerHTML = this.playerScore;
 
     //create ai
-    this.ai = new AI(this, 16, 5);
+    this.ai = new AI(this, screenWidth*0.95, screenHeight/2);
     this.aiScore = 0;
     document.querySelector('#scoreTwo').innerHTML = this.aiScore;
 
@@ -74,16 +75,16 @@ export default class levelScene extends Phaser.Scene {
     this.particles = this.add.particles('ball');
 
     this.emitter = this.particles.createEmitter({
-        speed: 10,
-        scale: { start: 0.008, end: 0 },
+        speed: 100,
+        scale: { start: 0.05, end: 0 },
         lifespan: 350,
         blendMode: 'SCREEN'
     });
 
     // create the ball
-    this.ball = this.ballGroup.create(9, 5, "ball").setOrigin(0.5, 0.5);
-    this.ball.setScale(0.02, 0.02);
-    this.ball.setMaxVelocity(15);
+    this.ball = this.ballGroup.create(0, 0, "ball").setOrigin(0.5, 0.5);
+    this.ball.setScale(0.2, 0.2);
+    this.ball.setMaxVelocity(150);
     this.ball.setMass(1);
     this.ball.setCircle(38);
     this.ball.body.onWorldBounds = true;
@@ -99,10 +100,10 @@ export default class levelScene extends Phaser.Scene {
       this.ball.setActive(true);
       // 'randomly' choose which way the ball goes
       if(Math.random() > 0.49) {
-        this.ball.setVelocity(-20, Phaser.Math.Between(-1, -4));
+        this.ball.setVelocity(-200, Phaser.Math.Between(-1, -4));
       }
       else {
-        this.ball.setVelocity(20, Phaser.Math.Between(1, 4));
+        this.ball.setVelocity(200, Phaser.Math.Between(1, 4));
       }
       this.ball.setData('inMiddle', false);
 
@@ -126,13 +127,13 @@ export default class levelScene extends Phaser.Scene {
     this.ai.update(this.ball);
 
     // if ball goes out on left side (player)
-    if (this.ball.x < 1) {
+    if (this.ball.x < screenWidth*0.05) {
         this.aiScore += 1;
         document.querySelector('#scoreTwo').innerHTML = this.aiScore;
         this.resetBall();
     }
     // ball goes out on right side (ai)
-    if (this.ball.x > 17) {
+    if (this.ball.x > screenWidth*0.95) {
         this.playerScore += 1;
         document.querySelector('#scoreOne').innerHTML = this.playerScore;
         this.resetBall();
@@ -181,7 +182,7 @@ resetBall() {
     // set ball back to starting position
     this.ball.setActive(false);
     this.ball.setVelocity(0);
-    this.ball.setPosition(9, 5);
+    this.ball.setPosition(screenWidth/2, screenHeight/2);
     this.ball.setData('inMiddle', true);
     this.player.paddle.y = 5;
 }

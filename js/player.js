@@ -1,9 +1,11 @@
+import {screenWidth, screenHeight} from './game.js';
+
 export default class Player {
     constructor(scene, x, y) {
       this.scene = scene;
   
       // Add sprite
-      this.paddle = scene.playerGroup.create(x, y, "pong").setScale(0.025).setOrigin(0.5, 0.5).setImmovable();
+      this.paddle = scene.playerGroup.create(x, y, "pong").setScale(screenHeight/1000).setOrigin(0.5, 0.5).setImmovable();
       this.paddle.setCollideWorldBounds(true);
       this.paddle.type = 'Left';
 
@@ -17,10 +19,10 @@ export default class Player {
   
       // keyboard controls
       if (scene.cursors.up.isDown) {
-        paddle.setVelocityY(-15);     
+        paddle.setVelocityY(-screenHeight);     
       }
       else if (scene.cursors.down.isDown) {     
-        paddle.setVelocityY(15);
+        paddle.setVelocityY(screenHeight);
       }
       else {       
         paddle.setVelocityY(0);
