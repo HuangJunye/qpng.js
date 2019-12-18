@@ -27,7 +27,7 @@ export default class AI {
                 }
             }
         } else {
-            paddle.y = 5;
+            paddle.y = screenHeight / 2;
         }
     }
 }

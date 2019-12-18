@@ -178,7 +178,6 @@ export default class levelScene extends Phaser.Scene {
         this.ball.setVelocity(0);
         this.ball.setPosition(screenWidth / 2, screenHeight / 2);
         this.ball.setData('inMiddle', true);
-        this.player.paddle.y = 5;
+        this.player.paddle.y = screenHeight / 2;
     }
-
 }
