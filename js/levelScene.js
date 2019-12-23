@@ -1,6 +1,7 @@
 import Player from "./player.js";
 import AI from "./ai.js";
 import { screenWidth, screenHeight } from './game.js';
+import Circuit from "./circuit.js";
 
 /**
  * level Scene
@@ -13,6 +14,10 @@ export default class levelScene extends Phaser.Scene {
     preload() {
         this.load.image("ball", "assets/ball.png");
         this.load.image("paddle", "assets/paddle.png");
+        this.load.image("circuit", "assets/circuit.png");
+        this.load.image("gateI", "assets/gateI.png");
+        this.load.image("gateX", "assets/gateX.png");
+        this.load.image("gateH", "assets/gateH.png");
 
         this.load.audio('left', ['sounds/left.wav']);
         this.load.audio('right', ['sounds/right.wav']);
@@ -42,6 +47,8 @@ export default class levelScene extends Phaser.Scene {
         // create inputs
         this.cursors = this.input.keyboard.createCursorKeys();
 
+        // add circuitGroup for circuit and gates
+        this.circuitGroup = this.physics.add.group();
         // create player group for player and ai
         this.playerGroup = this.physics.add.group();
         // Add ball Group
@@ -51,13 +58,16 @@ export default class levelScene extends Phaser.Scene {
             collideWorldBounds: true,
         });
 
+        // create circuit
+        //this.circuitLeft = new Circuit(this, 0, 0, 'left');
+        //this.circuitRight = new Circuit(this, screenWidth * 0.91, 0, 'right');
         // create player
-        this.player = new Player(this, screenWidth * 0.05, screenHeight / 2);
+        this.player = new Player(this, screenWidth * 0.15, screenHeight / 2);
         this.playerScore = 0;
         document.querySelector('#scoreOne').innerHTML = this.playerScore;
 
         //create ai
-        this.ai = new AI(this, screenWidth * 0.95, screenHeight / 2);
+        this.ai = new AI(this, screenWidth * 0.85, screenHeight / 2);
         this.aiScore = 0;
         document.querySelector('#scoreTwo').innerHTML = this.aiScore;
 
@@ -110,6 +120,7 @@ export default class levelScene extends Phaser.Scene {
     update(time, delta) {
         this.player.update();
         this.ai.update(this.ball);
+        //this.circuitLeft.update();
 
         // if ball goes out on left side (player)
         if (this.ball.x < screenWidth * 0.01) {
