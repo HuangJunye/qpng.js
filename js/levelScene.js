@@ -1,6 +1,6 @@
 import Player from "./player.js";
 import AI from "./ai.js";
-import Circuit from "./circuit.js";
+import {Circuit, Gate} from "./circuit.js";
 import { screenWidth, screenHeight } from './game.js';
 
 /**
@@ -49,6 +49,10 @@ export default class levelScene extends Phaser.Scene {
 
         // add circuitGroup for circuit and gates
         this.circuitGroup = this.physics.add.group();
+        // add gates
+        this.add.existing(new Gate(this, 100, 250, 'I'));
+        this.add.existing(new Gate(this, 150, 250, 'X'));
+        this.add.existing(new Gate(this, 200, 250, 'H'));
         // create player group for player and ai
         this.playerGroup = this.physics.add.group();
         // Add ball Group
