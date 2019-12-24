@@ -38,6 +38,7 @@ class Circuit extends Phaser.GameObjects.Sprite {
 
         this.selectedGateIndex = 0;
         this.cursor = new Cursor(scene, x, y);
+        this.statevector = new Statevector(scene, x, y);
     }
 
     update() {
@@ -105,6 +106,17 @@ class Cursor extends Phaser.GameObjects.Sprite {
     update(x, y) {
         this.setX(x);
         this.setY(y);
+    }
+}
+
+class Statevector extends Phaser.GameObjects.Text {
+    constructor(scene, x, y) {
+        var text = ' |000> |001> |010> |011> |100> |101> |110> |111>';
+        var style = { fontFamily: 'gameFont' };
+        super(scene, x - screenWidth * 0.02, y + screenHeight, text, style);
+        this.angle = -90;
+        this.setScale(0.84);
+        scene.add.existing(this);
     }
 }
 
