@@ -1,4 +1,4 @@
-import levelScene from "./levelScene.js";
+import levelScene from './levelScene.js';
 
 export const screenWidth = 800;
 export const screenHeight = 300;
@@ -11,7 +11,7 @@ const config = {
     transparent: true,
     resolution: 2,
     physics: {
-        default: "arcade",
+        default: 'arcade',
         arcade: {
             gravity: { x: 0, y: 0 }
         }

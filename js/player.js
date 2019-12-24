@@ -5,7 +5,7 @@ export default class Player {
         this.scene = scene;
 
         // Add sprite
-        this.paddle = scene.playerGroup.create(x, y, "paddle").setScale(screenHeight / 1000).setOrigin(0.5, 0.5).setImmovable();
+        this.paddle = scene.playerGroup.create(x, y, 'paddle').setScale(screenHeight / 1000).setOrigin(0.5, 0.5).setImmovable();
         this.paddle.setCollideWorldBounds(true);
         this.paddle.type = 'Left';
     }

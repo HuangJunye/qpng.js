@@ -1,6 +1,6 @@
-import Player from "./player.js";
-import AI from "./ai.js";
-import {Circuit, Gate} from "./circuit.js";
+import Player from './player.js';
+import AI from './ai.js';
+import {Circuit, Gate} from './circuit.js';
 import { screenWidth, screenHeight } from './game.js';
 
 /**
@@ -12,12 +12,13 @@ export default class levelScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image("ball", "assets/ball.png");
-        this.load.image("paddle", "assets/paddle.png");
-        this.load.image("circuit", "assets/circuit.png");
-        this.load.image("I", "assets/gateI.png");
-        this.load.image("X", "assets/gateX.png");
-        this.load.image("H", "assets/gateH.png");
+        this.load.image('ball', 'assets/ball.png');
+        this.load.image('paddle', 'assets/paddle.png');
+        this.load.image('circuit', 'assets/circuit.png');
+        this.load.image('cursor', 'assets/cursor.png')
+        this.load.image('I', 'assets/gateI.png');
+        this.load.image('X', 'assets/gateX.png');
+        this.load.image('H', 'assets/gateH.png');
 
         this.load.audio('left', ['sounds/left.wav']);
         this.load.audio('right', ['sounds/right.wav']);
@@ -79,7 +80,7 @@ export default class levelScene extends Phaser.Scene {
         });
 
         // create the ball
-        this.ball = this.ballGroup.create(0, 0, "ball").setOrigin(0.5, 0.5);
+        this.ball = this.ballGroup.create(0, 0, 'ball').setOrigin(0.5, 0.5);
         this.ball.setScale(0.5, 0.5);
         this.ball.setMaxVelocity(screenWidth);
         this.ball.setMass(1);
@@ -89,8 +90,8 @@ export default class levelScene extends Phaser.Scene {
         // particle emitter follow ball
         this.emitter.startFollow(this.ball);
 
-        // Space key to start the game and to continue when a player scores
-        this.input.keyboard.on('keydown_SPACE', function(event) {
+        // Enter key to start the game and to continue when a player scores
+        this.input.keyboard.on('keydown_ENTER', function(event) {
             if (this.ball.getData('inMiddle')) {
 
                 this.ball.setActive(true);

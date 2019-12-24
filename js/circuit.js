@@ -1,4 +1,4 @@
-import { screenWidth, screenHeight } from "./game.js";
+import { screenWidth, screenHeight } from './game.js';
 
 class Circuit extends Phaser.GameObjects.Sprite {
     constructor(scene, location) {
@@ -29,36 +29,40 @@ class Circuit extends Phaser.GameObjects.Sprite {
         this.keys = this.scene.input.keyboard.addKeys({
             x: 'x',
             h: 'h',
-            up: 'up',
-            down: 'down',
-            left: 'left',
-            right: 'right'
+            up: 'w',
+            down: 's',
+            left: 'a',
+            right: 'd',
+            delete: 'space'
         });
 
         this.selectedGateIndex = 0;
+        this.cursor = new Cursor(scene, x, y);
     }
 
     update() {
-
+        // select gate
         if (Phaser.Input.Keyboard.JustDown(this.keys.up)) {
             this.selectedGateIndex--;
         } else if (Phaser.Input.Keyboard.JustDown(this.keys.down)) {
             this.selectedGateIndex++;
         }
-
+        // handle out of index
         if (this.selectedGateIndex < 0) {
             this.selectedGateIndex = 0;
         } else if (this.selectedGateIndex > 2) {
             this.selectedGateIndex = 2;
         }
 
-        console.log('Selected Gate Index: '+this.selectedGateIndex);
+        this.cursor.update(this.gateArray[this.selectedGateIndex].x, this.gateArray[this.selectedGateIndex].y);
+        //console.log('Selected Gate Index: '+this.selectedGateIndex);
 
         if (this.keys.x.isDown) {
             this.gateArray[this.selectedGateIndex].gateType = 'X';
         } else if (this.keys.h.isDown) {
             this.gateArray[this.selectedGateIndex].gateType = 'H';
-        } else {
+        } else if (this.keys.delete.isDown) {
+            this.gateArray[this.selectedGateIndex].gateType = 'I';
         }
 
         // update gate images
@@ -81,8 +85,26 @@ class Gate extends Phaser.GameObjects.Sprite {
         scene.add.existing(this);
     }
 
-    updateTexture () {
+    updateTexture() {
         this.setTexture(this.gateType);
+    }
+}
+
+/**
+ *  Cursor for selecting gates
+ */
+
+class Cursor extends Phaser.GameObjects.Sprite {
+    constructor(scene, x, y) {
+        super(scene, x, y);
+        this.setTexture('cursor');
+        this.update();
+        scene.add.existing(this);
+    }
+
+    update(x, y) {
+        this.setX(x);
+        this.setY(y);
     }
 }
 
