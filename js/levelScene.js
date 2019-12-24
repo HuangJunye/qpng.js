@@ -57,8 +57,7 @@ export default class levelScene extends Phaser.Scene {
         });
 
         // create circuit
-        this.circuitLeft = new Circuit(this, 'left');
-        this.circuitRight = new Circuit(this, 'right');
+        this.circuit = new Circuit(this, 'right');
         // create player
         this.player = new Player(this, screenWidth * 0.15, screenHeight / 2);
         this.playerScore = 0;
@@ -118,7 +117,7 @@ export default class levelScene extends Phaser.Scene {
     update(time, delta) {
         this.player.update();
         this.ai.update(this.ball);
-        this.circuitLeft.update();
+        this.circuit.update();
 
         // if ball goes out on left side (player)
         if (this.ball.x < screenWidth * 0.01) {

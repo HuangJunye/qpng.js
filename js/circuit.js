@@ -24,9 +24,43 @@ class Circuit extends Phaser.GameObjects.Sprite {
             this.gateArray[i].setX(x + screenWidth * 0.05);
             this.gateArray[i].setY(screenHeight * (0.5 + (i - 1) * 0.22));
         }
+
+        // define keyboard controls
+        this.keys = this.scene.input.keyboard.addKeys({
+            x: 'x',
+            h: 'h',
+            up: 'up',
+            down: 'down',
+            left: 'left',
+            right: 'right'
+        });
+
+        this.selectedGateIndex = 0;
     }
 
     update() {
+
+        if (Phaser.Input.Keyboard.JustDown(this.keys.up)) {
+            this.selectedGateIndex--;
+        } else if (Phaser.Input.Keyboard.JustDown(this.keys.down)) {
+            this.selectedGateIndex++;
+        }
+
+        if (this.selectedGateIndex < 0) {
+            this.selectedGateIndex = 0;
+        } else if (this.selectedGateIndex > 2) {
+            this.selectedGateIndex = 2;
+        }
+
+        console.log('Selected Gate Index: '+this.selectedGateIndex);
+
+        if (this.keys.x.isDown) {
+            this.gateArray[this.selectedGateIndex].gateType = 'X';
+        } else if (this.keys.h.isDown) {
+            this.gateArray[this.selectedGateIndex].gateType = 'H';
+        } else {
+        }
+
         // update gate images
         for (var i = 0; i < this.gateArray.length; i++) {
             this.gateArray[i].updateTexture();
